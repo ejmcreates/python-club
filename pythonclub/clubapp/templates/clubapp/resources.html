@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Python Resources</h2>
+<table class='table'>
+    <tr>
+        <th>Resource Name</th>
+        <th>Resource Type</th>
+        <th>Resource URL</th>
+        <th>Date Entered</th>
+        <th>Entered By</th>
+        <th>Description</th>
+    </tr>
+    {% for t in resource_list %}
+        <tr>
+            <td>{{ t.resourcename }}</td>
+            <td>{{ t.resourcetype }}</td>
+            <td>{{ t.url }}</td>
+            <td>{{ t.dateentered }}</td>
+            <td>{{ t.userid }}</td>
+            <td>{{ t.description }}</td>    
+        </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
