@@ -3,6 +3,8 @@ from .models import Meeting, MeetingMinutes, Resource, Event
 from .views import index, getinfo, getmeetings, meetingdetails
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .forms import MeetingForm
+import datetime
 
 # Create your tests here.
 
@@ -57,4 +59,28 @@ class GetMeetingsTest(TestCase):
 class GetMeetingDetailsTest(TestCase):
     def test_view_url_accessible_by_name(self):
         response = self.client.get(reverse('meetingdetails'))
-        self.assertEqual(response.status_code, 200)                  
+        self.assertEqual(response.status_code, 200)  
+
+class MeetingFormTest(TestCase):
+    def test_meetingForm(self):
+        info={
+            'meetingtitle':"meeting1",
+            'meetingdate': datetime.date(2019, 5, 28),
+            'meetingtime':datetime.time(11, 00),
+            'location':"library",
+            'agenda':"talking bunches",
+        }   
+        form=MeetingForm(data=info)
+        self.assertTrue(form.is_valid)
+
+class MeetingFormTestInvalid(TestCase):
+    def test_meetingForm(self):
+        info={
+            'meetingtitle':"meeting1",
+            'meetingdate': datetime.date(2019, 5, 28),
+            'meetingtime':datetime.time(11, 00),
+            'location':"",
+            'agenda':"talking bunches",
+        }   
+        form=MeetingForm(data=info)
+        self.assertFalse(form.is_valid())
